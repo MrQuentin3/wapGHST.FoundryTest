@@ -32,9 +32,10 @@ contract StakeAndUnstake {
     function unstakingFunction(
         uint256 _amount
     ) public {
-        uint256 shares = wapGhst.previewWithdraw(_amount);
+        uint256 shares = wapGhst.previewWithdraw(_amount) - 1;
         farmFacet.withdraw(0, shares);
         wapGhst.leaveToUnderlying(shares);
+        LibERC20.transfer(ghstContract, msg.sender, _amount - 1);
     } 
 
 }
